@@ -1,4 +1,4 @@
-// Here we are in the networking with React Native section.
+// Here we are in the working with icons section.
 
 import React, { useState } from "react";
 import { StyleSheet, Text, View, ScrollView, TextInput } from "react-native";
@@ -6,8 +6,6 @@ import Box from "./src/components/Box.js";
 import Button from "./src/components/Button.js";
 import Images from "./src/components/Images.js";
 import Icons from "./src/components/Icons.js";
-import ItemsList from "./src/components/ItemsList.js";
-import Networking from "./src/components/Networking.js";
 
 export default function App() {
   const [state, setState] = useState({
@@ -23,9 +21,7 @@ export default function App() {
   return (
       <View style={styles.appContainer}>
         {/* <Images></Images> */}
-        {/* <Icons /> */}
-        {/* <ItemsList /> */}
-        <Networking />
+        <Icons />
       </View>
   );
 };

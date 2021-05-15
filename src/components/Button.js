@@ -1,16 +1,15 @@
-// Here we are in the using props section.
+// Here we are in the handling touch section.
 
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+// import { StyleSheet, Text, View } from "react-native";
+// Here we are also importing the <TouchableHighlight /> from React Native.
+import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
+// Here we are also importing the <TouchableNativeFeedback /> from React Native.  The <TouchableNativeFeedback /> will only work on Android.
+// import { StyleSheet, Text, View, TouchableHighlight, TouchableNativeFeedback } from "react-native";
 
-// export default () => {
-// This is how we pass the title prop from the parent <App /> to the child <Button />.
 export default props => {
-    // We have to move this in here in order to give it access to the props that are being passed down from the parent <App />.
     const styles = StyleSheet.create({
         buttonContainer: {
-            // backgroundColor: "blue",
-            // Here we are taking the bgColor property from the props being sent in by the parent <App /> and setting it to the background color of each <Button />.
             backgroundColor: props.bgColor,
             flexDirection: "column",
             alignItems: "center",
@@ -23,37 +22,21 @@ export default props => {
             marginBottom: 10,
         },
         title: {
-            // color: "white",
             color: props.fontColor,
         },
     });
 
     return (
-        <View style={styles.buttonContainer}>
-            {/* <Text style={styles.title}>Save</Text> */}
-            {/* This is how we get access to the title prop that gets passed down from the parent <App /> to the child <Button />. */}
-            {/* <Text style={styles.title}>{props.title}</Text> */}
-            {/* This is how we access props passed down in between the opening and the closing tags of a component. */}
-            <Text style={styles.title}>{props.children}</Text>
-        </View>
+        // When we are using our own custom <Button>s, we have to use the <TouchableHighlight /> so that we can actually keep track of when something is being touched by our fingers.
+        // We use the <TouchableHightlight /> to handle touch events.
+        // We have a basic button that comes with every operating system, but if we want to do something cool, we need to actually create our own custom <Button />, and then use the <TouchableHighlight /> to keep track of whenever we touch our custom <Button />.
+        <TouchableHighlight onPress={() => alert(`You Pressed a Button`)}>
+        {/* We can also use the <TouchableNativeFeedback />, but this only works on Android.  If we try to use it on iOS, we'll get an error.  The <TouchableNativeFeedback /> gives a native experience when we touch the screen on Android devices.  With the <TouchableHighlight /> we get a shadow when we click on the screen on Android devices, but with the <TouchableNativeFeedback /> we don't.  If we are focused on Android devices, we can use the <TouchableNativeFeedback />.  If we want to use something more universal that will work on iOS and Android, then we should use the <TouchableHighlight />.  The <TouchableHighlight /> will work on both iOS and Android. */}
+        {/* <TouchableNativeFeedback onPress={() => alert(`You Pressed a Button`)}> */}
+            <View style={styles.buttonContainer}>
+                <Text style={styles.title}>{props.children}</Text>
+            </View>
+        </TouchableHighlight>
+        // </TouchableNativeFeedback>
     );
 };
-
-// const styles = StyleSheet.create({
-//     buttonContainer: {
-//         backgroundColor: "blue",
-//         flexDirection: "column",
-//         alignItems: "center",
-//         justifyContent: "center",
-//         paddingTop: 20,
-//         paddingBottom: 20,
-//         paddingLeft: 40,
-//         paddingRight: 40,
-//         borderRadius: 5,
-//     },
-//     title: {
-//         color: "white",
-//     },
-// });
-
-// You may be wondering why you would use props.children, when you can just use the regular properties.  You do this because you can pass whatever you want to any component, including other components.  This will make your life easier.  Now you will really have reusable components.
