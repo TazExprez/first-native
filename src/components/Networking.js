@@ -4,7 +4,8 @@ import React, { useState } from "react";
 // import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
 // import { StyleSheet, Text, View } from "react-native";
 // We are now also importing the <TouchableHighlight /> from React Native so that we can include at least one button in this application.
-import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
+// import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
+import { StyleSheet, Text, View, TouchableHighlight, TextInput } from "react-native";
 
 export default props => {
     const styles = StyleSheet.create({
@@ -15,6 +16,13 @@ export default props => {
             alignItems: "center",
             justifyContent: "center",
             padding: 20,
+        },
+        textInput: {
+            backgroundColor: "orange",
+            padding: 10,
+            color: "black",
+            fontSize: 18,
+            width: 200,
         },
         button: {
             backgroundColor: "red",
@@ -27,14 +35,24 @@ export default props => {
     // const [state, setState] = useState({});
 
     const [state, setState] = useState({
-        character: "",
+        characterToSearchFor: "",
+        foundCharacter: "",
     });
+
+    const handleInputChange = text => {
+    // function handleInputChange(text) {
+        setState({
+            characterToSearchFor: text,
+        });
+        // console.log(state.characterToSearchFor);
+    };
 
     // We are using the Star Wars API in this section.
 
     // Here we are going to use an async f() with the Star Wars API.
     // async function
     // We can also put the async f() inside of a variable, like down here.  We are passing in a name as the argument in order to make this async f() dynamic.
+    // const getData = async name => {
     const getData = async name => {
         // We are putting this inside of a try...catch statement.  We are going to try to get the data from the Star Wars API.  If there is an error, we are going to catch it with the catch statement and see the error in the console, in our case.
         try {
@@ -48,7 +66,7 @@ export default props => {
 
             // Now we are setting the state to whatever the data variable is.
             setState({
-                character: data,
+                foundCharacter: data,
             });
 
             // Here we will console.log() the name of the Star Wars character that we are searching for.
@@ -61,6 +79,7 @@ export default props => {
     };
 
     // Here we are triggering the getData() with the name "luke" as the argument.
+    // This f() keeps getting triggered, so we should comment it out as soon as we get a result, or we will be blocked from the SWAPI for about 24 hours.
     // getData("luke");
 
     return (
@@ -69,10 +88,13 @@ export default props => {
             {/* <Text>{state.character}</Text> */}
             {/* <TouchableHighlight style={styles.button}> */}
             {/* <TouchableHighlight style={styles.button} onPress={() => getData("luke")}> */}
-            <TouchableHighlight style={styles.button} onPress={() => getData("anakin")}>
+            {/* <TouchableHighlight style={styles.button} onPress={() => getData("anakin")}> */}
+            <TextInput style={styles.textInput} placeholder="Enter Name Here" onChangeText={handleInputChange} value={state.characterToSearchFor} autoCapitalize="none"></TextInput>
+            {/* <TextInput style={styles.textInput} placeholder="Enter Name Here" onChangeText={handleInputChange} value={state.characterToSearchFor} autoCapitalize="none" autoComplete={false}></TextInput> */}
+            <TouchableHighlight style={styles.button} onPress={() => getData(state.characterToSearchFor)}>
                 <Text>Search</Text>
             </TouchableHighlight>
-            <Text>{state.character}</Text>
+            <Text>{state.foundCharacter}</Text>
         </View>
     );
 };
